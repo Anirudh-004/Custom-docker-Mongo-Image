@@ -1,0 +1,18 @@
+#Step 1: Building a base image
+FROM alpine
+
+#Step 2: Install the software
+RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/main' >> /etc/apk/repositories
+
+RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/community' >> /etc/apk/repositories
+
+RUN apk update
+RUN apk add mongodb=3.4.4-r0
+
+#Step 2.5: Configure the software
+VOLUME [ "/data/db" ]
+WORKDIR /data
+EXPOSE 27017
+
+#Step 3: Run the default commands
+CMD [ "mongod" ]
